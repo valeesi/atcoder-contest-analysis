@@ -1,16 +1,22 @@
-# This is a sample Python script.
+import urllib
+import urllib.request
+from datetime import datetime
+from bs4 import BeautifulSoup
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+url = "https://atcoder.jp/contests/archive?page="
 
+dates = []
+for num in range(1, 8):
+    req = urllib.request.urlopen(url + str(num))
+    data = BeautifulSoup(req, "html.parser")
+    for row in data.find_all('tr'):
+        asd = 0
+        if row.find('td') is not None:
+            dates.append(datetime.strptime(row.find_all('td')[0].text, '%Y-%m-%d %H:%M:%S%z'))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+    # if (row.find_all('td')[0] !== undefined):
 
+    print('#%d done' % num)
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+# if __name__ == '__main__':
+#     print_hi('PyCharm')
